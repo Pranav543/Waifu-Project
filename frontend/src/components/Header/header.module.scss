@@ -1,0 +1,35 @@
+.container {
+  height: 60px;
+  background-color:#1d1b1b;
+  border-bottom:1px solid #4b4b4b;
+}
+
+.inner-container {
+  display: flex;
+  width:100%;
+  justify-content: space-between;
+}
+
+.nav {
+  ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+  li {
+    list-style-type: none;
+    line-height: 60px;
+    color:white;
+    &:not(:last-child) {
+      margin-right: 20px;
+    }
+
+    a{color:inherit}
+
+    .active{
+        // color:#ffab7c; 
+        color:#A4A5FF;
+        font-weight: 700;
+    }
+  }
+}

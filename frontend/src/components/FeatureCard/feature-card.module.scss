@@ -1,0 +1,59 @@
+.link-wrapper{
+    &:not(:last-child){
+        margin-right:30px;
+    }
+}
+
+.container{
+    width:220px;
+    height:300px;
+    background-color:#2E2F33;
+    border-radius:10px;
+    overflow:hidden;
+    display:inline-block;
+    transition:0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+    &:hover{
+        transform: translateY(-10px);
+        transition:0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+        .image{
+            img{
+                transform: scale(1.1);
+                transition:0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+            }
+        }
+    }
+}
+
+.image{
+    height:170px;
+    background-color:#A4A5FF;
+    padding:25px;
+    
+    img{
+        height:100%; width:100%; 
+        object-fit: contain;
+        transition:0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+    }
+}
+
+.nft{
+    &__content{
+        padding:20px;
+        height:130px;
+        display:flex; 
+        justify-content: space-between;
+        flex-direction: column;
+        *{margin:0;}
+    }
+    &__name{
+        color:white;
+    }
+    &__id{
+        color:#A4A5FF;
+    }
+    &__expiry{
+        color:#808080;
+    }
+}
