@@ -1,0 +1,44 @@
+.heading-wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  border-bottom: 1px solid #4b4b4b;
+
+  .title {
+    color: white;
+  }
+}
+
+.cards-section {
+  padding: 40px 0;
+  overflow-x: scroll;
+  margin-bottom:40px;
+  // display:flex;
+
+  .cards-rail {
+    width: 1970px;
+  }
+
+  /* width */
+  &::-webkit-scrollbar {
+    height: 10px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: #111;
+    border-radius: 10px;
+    overflow:hiddedn;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #2e2f33;
+    border-radius:30px;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #a4a5ff;
+  }
+}
