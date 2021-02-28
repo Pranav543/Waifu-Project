@@ -7,11 +7,11 @@ export function Footer() {
       <div className="container">
         <div className="row">
           <div className="col-md-6">
-            Developed by <a href="">Pranav Naik</a> and{" "}
-            <a href="">Salil Naik</a>.
+            Developed by <a href="" target="_blank">Pranav Naik</a> and{" "}
+            <a href="https://twitter.com/__salil_naik__" target="_blank">Salil Naik</a>.
           </div>
           <div className="col-md-6">
-            <a href="">
+            <a href="https://github.com/Pranav543/Waifu-Project" target="_blank">
               <div className={style.github}></div>
             </a>
           </div>
