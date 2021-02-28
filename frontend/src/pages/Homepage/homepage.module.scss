@@ -1,58 +1,62 @@
-.container{
-    background-color:#1d1b1b;
-    padding:50px 0;
+.container {
+  background-color: #1d1b1b;
+  padding: 50px 0;
 }
 
-.modal-container{
-    background-color:gray;
-    z-index:10;
-    position:fixed; 
-    top:0; left:0; 
-    width:100vw; 
-    height:100vh;
+.modal-container {
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 10;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  padding:100px 0;
 }
 
-.close-modal{
-    height:30px; width:30px; 
-    background-color:rgb(247, 55, 55); 
-    color:black; 
-    line-height:30px; 
-    text-align: center;
-    position:absolute; 
-    top:50px; right:50px;
-    font-weight:bold; 
-    border-radius:15px;
-    cursor: pointer;
+.close-modal {
+  height: 30px;
+  width: 30px;
+  background-color: rgb(247, 55, 55);
+  color: rgba(255, 255, 255, 0.685);
+  line-height: 30px;
+  text-align: center;
+  position: absolute;
+  top: 50px;
+  right: 50px;
+  font-weight: bold;
+  border-radius: 2px;
+  cursor: pointer;
 }
 
-.title{
-    color:white; 
-    margin-bottom:30px;
+.title {
+  color: white;
+  margin-bottom: 30px;
 }
 
-.desc{
-    max-width:600px;
-    color:#808080;
+.desc {
+  max-width: 600px;
+  color: #808080;
 }
 
-.category-section{
-    background-color:#1d1b1b;
+.category-section {
+  background-color: #1d1b1b;
 }
 
-.img{
-    width:100%; 
+.img {
+  width: 100%;
 }
 
-.content-section{
-    height:100%; 
-    display:flex; 
-    flex-direction: column;
-    justify-content: center;;
+.content-section {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.btn-container{
-    display: flex;
-    margin-top:20px;
+.btn-container {
+  display: flex;
+  margin-top: 20px;
 }
 
 @import "../../components/btn.scss";
