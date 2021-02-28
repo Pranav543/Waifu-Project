@@ -640,8 +640,8 @@
       ]
     },
     "E:\\EthIndia Fellowship\\Waifu Project\\contracts\\CreateWaifu.sol": {
-      "lastModificationDate": 1614519653615,
-      "contentHash": "21f4df65bf4910fdca3f2c1a3ba52f8d",
+      "lastModificationDate": 1614525212585,
+      "contentHash": "00edc7d9ce3386de176c8b144901a71b",
       "sourceName": "contracts/CreateWaifu.sol",
       "solcConfig": {
         "version": "0.6.2",

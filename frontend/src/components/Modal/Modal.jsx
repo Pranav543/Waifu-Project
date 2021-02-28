@@ -17,7 +17,7 @@ export function Modal() {
     const networkId = await web3.eth.net.getId();
     const randomNumber = Math.floor(Math.random() * 100000);
     // const imgSource = `https://www.thiswaifudoesnotexist.net/example-${randomNumber}.jpg`;
-    const address = `0x7Fc753337F15F47cf7BCE74545c2753E3dA12bda`;
+    const address = `0x873597E0CC137a72Fe928C376d1F7CF00C2e6D3D`;
     console.log(address);
     const instance = new web3.eth.Contract(CreateWaifu.abi, address);
     // const tx = await instance.methods
@@ -28,9 +28,22 @@ export function Modal() {
         
     //   });
     // console.log("Tx Hash Is : ", tx);
-    const num = await instance.methods.getWaifusCount(accounts[0]).call();
-    console.log("Number Of Waifu: ", num);
-    // const second_waifu = await instance.methods.waifus(0).call();
+    // const num = await instance.methods.getWaifusCount(accounts[0]).call();
+    // console.log("Number Of Waifu: ", num);
+    // const au = await instance.methods.putForAuction(0, 1).send({
+    //   gas:300000,
+    //   from: accounts[0].toLowerCase()
+    // });
+    // console.log("Auction Tx: ", au);
+    const buytx = await instance.methods.buyWaifu(0).send({
+      gas: 3000000,
+      from: accounts[0].toLowerCase(),
+      value: web3.utils.toWei("1")
+    })
+    console.log("Buy Tx: ", buytx);
+    // const trade = await instance.methods.getAuctionTrade(0).call();
+    // console.log("Trade: ",trade)
+    // const second_waifu = await instance.methods.waifus("0").call();
     // console.log("Second Waifu: ", second_waifu);
   };
 

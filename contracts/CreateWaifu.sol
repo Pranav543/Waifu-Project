@@ -35,7 +35,7 @@ contract CreateWaifu is ERC721, VRFConsumerBase, Ownable {
         address seller;
         uint256 tokenId;
         uint256 price;
-        bytes32 status;   /// Open, Executed, Cancelled
+        uint256 status;   /// Open, Executed, Cancelled
     }
 
     Waifu[] public waifus;
@@ -50,7 +50,7 @@ contract CreateWaifu is ERC721, VRFConsumerBase, Ownable {
     mapping(uint256 => auctionTrade) public trades;
     uint256[] public forAuction;
 
-    event TradeStatusChange(uint256 ad, bytes32 status);
+    event TradeStatusChange(uint256 ad, uint256 status);
 
     constructor(address _VRFCoordinator, address _LinkToken, bytes32 _keyhash)
         public
@@ -177,34 +177,37 @@ contract CreateWaifu is ERC721, VRFConsumerBase, Ownable {
     }
     
     function putForAuction(uint256 _tokenId, uint256 _price) public {
-        transferWaifu(msg.sender, address(this), _tokenId);
+        approve(address(this), _tokenId);
+        transferFrom(msg.sender, address(this), _tokenId);
         trades[_tokenId] = auctionTrade({
             seller: msg.sender,
             tokenId: _tokenId,
             price: _price,
-            status: "Open"
+            status: 1
         });
         auctionCount += 1;
         forAuction.push(_tokenId);
-        emit TradeStatusChange(auctionCount - 1, "Open");
+        emit TradeStatusChange(auctionCount - 1, 1);
     }
 
     function transferWaifu(address from, address to, uint256 tokenId) private {
-        safeTransferFrom(from, to, tokenId);
+        transferFrom(from, to, tokenId);
     }
 
     function buyWaifu(uint256 _tokenId) public payable {
         auctionTrade memory trade = getAuctionTrade(_tokenId);
-        require(trade.status == "Open", "Trade is not Open.");
+        require(trade.status == 1, "Trade is not Open.");
         address payable seller = address(uint160(trade.seller));
         uint256 buyAmount = trade.price;
         require (msg.value == buyAmount, "msg.value should be equal to the buyAmount");
         seller.transfer(buyAmount);
         address buyer = msg.sender;
         approve(buyer, _tokenId);
-        transferWaifu(address(this), buyer, _tokenId);
-        getAuctionTrade(_tokenId).status = "Executed";
-        emit TradeStatusChange(_tokenId, "Executed");
+        transferFrom(address(this), buyer, _tokenId);
+        // approve(buyer, _tokenId);
+        // transferWaifu(address(this), buyer, _tokenId);
+        getAuctionTrade(_tokenId).status = 0;
+        emit TradeStatusChange(_tokenId, 0);
         
         uint256 index;
         for (uint i=0; i<senderToTokenId[trade.seller].length; i++) {
