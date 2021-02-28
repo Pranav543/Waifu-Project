@@ -4,7 +4,9 @@ import style from "./details.module.scss";
 import pokemon from "../../images/waifu-filled-bg.jpg";
 import { PropCard } from "./PropCard/index";
 
-export function Details() {
+export function Details(props) {
+//   console.log("details");
+//   console.log(props.location.aboutProps);
   return (
     <>
       <div className={style.container}>
@@ -31,10 +33,15 @@ export function Details() {
                   fugiat perspiciatis porro corrupti voluptatum asperiores
                   voluptas deserunt ad qui? Omnis magnam, autem ipsum fugiat
                   reprehenderit repellendus eos sint doloremque quod, magni
-                  quisquam. 
+                  quisquam.
                 </p>
 
-                <h3 className={style["sub-heading"]} style={{margin:'50px 0 30px 0'}}>Special Features</h3>
+                <h3
+                  className={style["sub-heading"]}
+                  style={{ margin: "50px 0 30px 0" }}
+                >
+                  Special Features
+                </h3>
                 <div className="row">
                   <div className="col-3">
                     <PropCard type={"origin"} value={"India"} />

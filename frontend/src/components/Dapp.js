@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 // components and pages
 import { Header } from "../components/Header/index";
@@ -32,7 +32,8 @@ export class Dapp extends React.Component {
           <Switch>
             <Homepage path="/" exact loginStatus={this.state.loginStatus} />
             <Login path="/login" exact getLoginStatus={this.loginStatus}/>
-            <Details path="/waifu/:id" />
+            {/* <Details path="/waifu/:id" /> */}
+            <Route path="/waifu/:id" component={Details}/>
           </Switch>
           <Footer />
         </Router>
