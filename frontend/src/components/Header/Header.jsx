@@ -1,10 +1,20 @@
 import React, { useEffect } from "react";
 import { NavLink, Link } from "react-router-dom";
 import style from "./header.module.scss";
-
+import getWeb3 from "./../../web3";
 import Avatar from "./Avatar/Avatar";
 
 export function Header(props) {
+
+  const connectToMetamask = async () =>{
+    console.log("In")
+    const web3 = await getWeb3();
+    console.log(web3)
+      const accounts = await web3.eth.getAccounts();
+      const networkId = await web3.eth.net.getId();
+      console.log(accounts);
+      console.log(networkId);
+  }
   return (
     <header className={style.container}>
       <div className="container">
@@ -32,9 +42,9 @@ export function Header(props) {
                     <Avatar address={props.userAddress} />
                   ) : (
                     <li>
-                      <NavLink activeClassName={style.active} exact to="/login">
-                        Login
-                      </NavLink>
+                      <button className="btn btn-warning" type="button" onClick={connectToMetamask}>
+                        Connect Wallet
+                      </button>
                     </li>
                   )}
                 </ul>

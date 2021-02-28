@@ -10,7 +10,7 @@ import { Category } from "../../components/Category/index";
 import { Modal } from "../../components/Modal/index";
 
 export function Homepage(props) {
-  const [loginStatus, setLoginStatus] = useState(false);
+  const [loginStatus, setLoginStatus] = useState(true);
   // const [modalToggle, setModalToggle] = useState(false);
   const [modalDisplay, setModalDisplay] = useState("none");
 
@@ -70,7 +70,7 @@ export function Homepage(props) {
                   consectetur adipisicing elit. Temporibus, nihil.
                 </p>
                 <div className={style["btn-container"]}>
-                  {loginStatus ? (
+                  {true ? (
                     <div
                       className={`${style.btn} ${style["btn__outlined"]}`}
                       onClick={showModal}
