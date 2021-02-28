@@ -13,13 +13,29 @@ import { Modal } from "../../components/Modal/index";
 
 export function Homepage() {
   const [modalDisplay, setModalDisplay] = useState("none");
-  const address = '0xA1aD01C972A553f366128536a4aCA8cC00b74A17';
+
   useEffect(()=>{
     async function showData() {
+      const address = '0x7Fc753337F15F47cf7BCE74545c2753E3dA12bda'
       const web3 = await getWeb3();
+      const accounts = await web3.eth.getAccounts();
+      console.log(accounts);
       const instance = new web3.eth.Contract(CreateWaifu.abi, address);
-      const totalIDs = await instance.methods.getTokenIdOfWaifus().call(); 
-      console.log(totalIDs);
+      const numOfWaifus = await instance.methods.getWaifusCount(accounts[0]).call();
+      console.log('number', numOfWaifus);
+     
+
+      for (let i = numOfWaifus - 1; i >= 0; i--) {
+        console.log('loop')
+        //Get id
+        const ids = await instance.methods
+          .senderToTokenId(accounts[0], i)
+          .call();
+
+        console.log(ids);
+        //Get option
+        // const option = await this.state.putContract.methods.idToOption(id).call();
+      }
       // const data = await instance.methods.getWaifuStats();
       // console.log(data); 
     }

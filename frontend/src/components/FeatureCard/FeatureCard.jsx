@@ -37,6 +37,7 @@ export function FeatureCard(props) {
             <h5 className={style["nft__name"]}>{props.data.name}</h5>
             <p className={style["nft__id"]}>#{props.data.id}</p>
             {/* <p className={style["nft__expiry"]}>Expires in 15 days</p> */}
+            <div className={`${style.btn} ${style['btn__filled']}`}>Auction</div>
           </div>
         </div>
       </Link>
