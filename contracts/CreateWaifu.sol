@@ -132,11 +132,11 @@ contract CreateWaifu is ERC721, VRFConsumerBase, Ownable {
             )
         );
         _safeMint(requestToSender[requestId], newId);
-        senderToTokenId[msg.sender].push(newId);
+        senderToTokenId[requestToSender[requestId]].push(newId);
     }
 
-    function getTokenIdOfWaifus() public view returns (uint256[] memory) {
-        return senderToTokenId[msg.sender];
+    function getWaifusCount(address _address) public view returns (uint256) {
+        return senderToTokenId[_address].length;
     }
 
     function getNumberOfWaifus() public view returns (uint256) {
