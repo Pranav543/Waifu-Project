@@ -15,7 +15,7 @@ export function Modal() {
     console.log(accounts)
       const networkId = await web3.eth.net.getId();
       console.log(networkId)
-      const address = `0xaa608FE67f3BAb163d843c67798Bd45B2949eAF0`;
+      const address = `0x3618a00e2aDd9A924D1cA2C623F065599573FAD6`;
       console.log(address)
       const instance = new web3.eth.Contract(CreateWaifu.abi, address);
       const tx = await instance.methods.requestNewRandomWaifu(7887, name, origin, description).send({
@@ -24,7 +24,7 @@ export function Modal() {
       console.log("Tx Hash: ", tx)
       const num = await instance.methods.getNumberOfWaifus().call();
       console.log("Number Of Waifu: ", num)
-      const second_waifu = await instance.methods.waifus(1).call();
+      const second_waifu = await instance.methods.waifus(0).call();
       console.log("Second Waifu: ", second_waifu)
   };
 

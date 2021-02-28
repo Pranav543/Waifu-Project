@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.6.2;
+pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@chainlink/contracts/src/v0.6/VRFConsumerBase.sol";
@@ -27,14 +28,29 @@ contract CreateWaifu is ERC721, VRFConsumerBase, Ownable {
         uint256 hip;
         string description;
         uint256 rating;
+        string waifuLink;
+    }
+
+    struct auctionTrade{
+        address seller;
+        uint256 tokenId;
+        uint256 price;
+        bytes32 status;   /// Open, Executed, Cancelled
     }
 
     Waifu[] public waifus;
+    address[] public hostedAuctions;
     mapping(bytes32 => string) requestToWaifuName;
     mapping(bytes32 => string) requestToWaifuOrigin;
     mapping(bytes32 => string) requestToWaifuDescription;
+    mapping(bytes32 => string) requestToWaifuLink;
     mapping(bytes32 => address) requestToSender;
-    mapping(bytes32 => uint256) requestToTokenId;
+    mapping(address => uint256[]) public senderToTokenId;
+    uint256 auctionCount;
+    mapping(uint256 => auctionTrade) public trades;
+    uint256[] public forAuction;
+
+    event TradeStatusChange(uint256 ad, bytes32 status);
 
     constructor(address _VRFCoordinator, address _LinkToken, bytes32 _keyhash)
         public
@@ -45,13 +61,22 @@ contract CreateWaifu is ERC721, VRFConsumerBase, Ownable {
         LinkToken = _LinkToken;
         keyHash = _keyhash;
         fee = 0.0001 * 10**18; // 0.1 LINK
+        auctionCount = 0;
+    }
+
+    function removeElement(uint256[] storage arr, uint256 index) internal {
+        // Move the last element into the place to delete
+        arr[index] = arr[arr.length - 1];
+        // Remove the last element
+        arr.pop();
     }
 
     function requestNewRandomWaifu(
         uint256 userProvidedSeed,
         string memory name, 
         string memory origin,
-        string memory description
+        string memory description,
+        string memory waifuLink
     ) public returns (bytes32) {
         require(
             LINK.balanceOf(address(this)) >= fee,
@@ -61,6 +86,7 @@ contract CreateWaifu is ERC721, VRFConsumerBase, Ownable {
         requestToWaifuName[requestId] = name;
         requestToWaifuOrigin[requestId] = origin;
         requestToWaifuDescription[requestId] = description;
+        requestToWaifuLink[requestId] = waifuLink;
         requestToSender[requestId] = msg.sender;
         return requestId;
     }
@@ -82,13 +108,13 @@ contract CreateWaifu is ERC721, VRFConsumerBase, Ownable {
         override
     {
         uint256 newId = waifus.length;
-        uint256 age = ((randomNumber % 10000) / 100 );
-        uint256 height = ((randomNumber % 10000) / 100 );
-        uint256 weight = ((randomNumber % 10000) / 100 );
-        uint256 bust = ((randomNumber % 10000) / 100 );
-        uint256 waist = ((randomNumber % 10000) / 100 );
-        uint256 hip = ((randomNumber % 10000) / 100 );
-        uint256 rating = ((randomNumber % 10000) / 100 );
+        uint256 age = ((randomNumber % 10000) + 1 );
+        uint256 height = ((randomNumber % 160) + 90 );
+        uint256 weight = ((randomNumber % 30) + 10 );
+        uint256 bust = ((randomNumber % 110) + 75 );
+        uint256 waist = ((randomNumber % 80) + 54 );
+        uint256 hip = ((randomNumber % 110) + 82 );
+        uint256 rating = ((randomNumber % 100) / 1 );
 
         waifus.push(
             Waifu(
@@ -101,14 +127,16 @@ contract CreateWaifu is ERC721, VRFConsumerBase, Ownable {
                 waist,
                 hip,
                 requestToWaifuDescription[requestId],
-                rating
+                rating,
+                requestToWaifuLink[requestId]
             )
         );
         _safeMint(requestToSender[requestId], newId);
+        senderToTokenId[msg.sender].push(newId);
     }
 
-    function getRating(uint256 tokenId) public view returns (uint256) {
-        return waifus[tokenId].rating;
+    function getTokenIdOfWaifus() public view returns (uint256[] memory) {
+        return senderToTokenId[msg.sender];
     }
 
     function getNumberOfWaifus() public view returns (uint256) {
@@ -119,6 +147,10 @@ contract CreateWaifu is ERC721, VRFConsumerBase, Ownable {
         public
         view
         returns (
+            string memory,
+            string memory,
+            string memory,
+            string memory,
             uint256,
             uint256,
             uint256,
@@ -128,16 +160,65 @@ contract CreateWaifu is ERC721, VRFConsumerBase, Ownable {
             uint256
         )
     {
+        Waifu memory w = waifus[tokenId];
         return (
-            waifus[tokenId].age,
-            waifus[tokenId].height,
-            waifus[tokenId].weight,
-            waifus[tokenId].bust,
-            waifus[tokenId].waist,
-            waifus[tokenId].hip,
-            waifus[tokenId].rating
+            w.name,
+            w.origin,
+            w.description,
+            w.waifuLink,
+            w.age,
+            w.height,
+            w.weight,
+            w.bust,
+            w.waist,
+            w.hip,
+            w.rating
         );
     }
+    
+    function putForAuction(uint256 _tokenId, uint256 _price) public {
+        transferWaifu(msg.sender, address(this), _tokenId);
+        trades[_tokenId] = auctionTrade({
+            seller: msg.sender,
+            tokenId: _tokenId,
+            price: _price,
+            status: "Open"
+        });
+        auctionCount += 1;
+        forAuction.push(_tokenId);
+        emit TradeStatusChange(auctionCount - 1, "Open");
+    }
 
+    function transferWaifu(address from, address to, uint256 tokenId) private {
+        safeTransferFrom(from, to, tokenId);
+    }
 
+    function buyWaifu(uint256 _tokenId) public payable {
+        auctionTrade memory trade = getAuctionTrade(_tokenId);
+        require(trade.status == "Open", "Trade is not Open.");
+        address payable seller = address(uint160(trade.seller));
+        uint256 buyAmount = trade.price;
+        require (msg.value == buyAmount, "msg.value should be equal to the buyAmount");
+        seller.transfer(buyAmount);
+        address buyer = msg.sender;
+        approve(buyer, _tokenId);
+        transferWaifu(address(this), buyer, _tokenId);
+        getAuctionTrade(_tokenId).status = "Executed";
+        emit TradeStatusChange(_tokenId, "Executed");
+        
+        uint256 index;
+        for (uint i=0; i<senderToTokenId[trade.seller].length; i++) {
+            if (senderToTokenId[trade.seller][i] == trade.tokenId) {
+                index = i;
+                break;
+            }
+        }
+        removeElement(senderToTokenId[trade.seller], index);
+        senderToTokenId[buyer].push(trade.tokenId);
+    }
+
+    function getAuctionTrade(uint256 _tokenId) public view returns (auctionTrade memory trade_) {
+        auctionTrade memory trade = trades[_tokenId];
+        return trade;
+    }
 }

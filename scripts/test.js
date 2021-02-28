@@ -1,7 +1,7 @@
 fs = require("fs");
 path = require("path")
 
-const contractAddress = "0xaa608FE67f3BAb163d843c67798Bd45B2949eAF0";
+const contractAddress = "0x3618a00e2aDd9A924D1cA2C623F065599573FAD6";
 
 const main = async () => {
   const [owner] = await ethers.getSigners();
@@ -20,8 +20,10 @@ const main = async () => {
 
   // let tx = await contract.requestNewRandomWaifu(77, "bfjs", "fkjd", "cjdkcc");
   // console.log("Tx: ", tx)
-  let waifu = await contract.waifus(0);
-  console.log(waifu)
+  let waifu = await contract.waifus("0");
+  console.log(waifu);
+  let tx= await contract.transfer("0", "0xD19eaf5e9946c487F15De00d4f2d8763283E486a", "0x6528Fa8c77A99D0Ca68178e982aEfa44B664f19f");
+  console.log(tx)
 };
 
 main()
