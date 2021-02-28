@@ -55,26 +55,4 @@
     margin-top:20px;
 }
 
-.btn{
-    display: inline-flex;
-    padding:8px 20px;
-    border-radius:3px;
-    margin-right:20px;
-    text-transform: uppercase;
-    font-size:14px;
-    font-weight: medium;
-    transition: 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-    cursor: pointer;
-
-    &__outlined{
-        border:1px solid white;
-        color:white;
-
-        &:hover{
-            color:#A4A5FF;
-            box-shadow:4px 4px #A4A5FF;
-            text-decoration: none;
-            transition: 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
-    }
-}
+@import "../../components/btn.scss";

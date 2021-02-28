@@ -1,22 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { UserContext } from "../../utli/UserContext";
+
 import style from "./homepage.module.scss";
 import waifuImage from "../../images/waifu.png";
-// import {waifuR} from "waifur";
-// import {test} from "../../scripts/waifu";
 
 // components
 import { Category } from "../../components/Category/index";
 import { Modal } from "../../components/Modal/index";
 
-export function Homepage(props) {
-  const [loginStatus, setLoginStatus] = useState(true);
-  // const [modalToggle, setModalToggle] = useState(false);
+export function Homepage() {
   const [modalDisplay, setModalDisplay] = useState("none");
-
-  useEffect(() => {
-    setLoginStatus(props.loginStatus);
-  });
 
   let showModal = () => {
     setModalDisplay("block");
@@ -25,6 +18,8 @@ export function Homepage(props) {
   let hideModal = () => {
     setModalDisplay("none");
   };
+
+  const {user} = useContext(UserContext);
 
   let categoryOneData = {
     name: "Popular Waifus",
@@ -70,7 +65,7 @@ export function Homepage(props) {
                   consectetur adipisicing elit. Temporibus, nihil.
                 </p>
                 <div className={style["btn-container"]}>
-                  {true ? (
+                  {user ? (
                     <div
                       className={`${style.btn} ${style["btn__outlined"]}`}
                       onClick={showModal}
@@ -78,12 +73,7 @@ export function Homepage(props) {
                       Mint
                     </div>
                   ) : (
-                    <Link
-                      to="/login"
-                      className={`${style.btn} ${style["btn__outlined"]}`}
-                    >
-                      Login
-                    </Link>
+                    <></>
                   )}
 
                   <a
