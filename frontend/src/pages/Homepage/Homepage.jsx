@@ -1,22 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { UserContext } from "../../utli/UserContext";
+
 import style from "./homepage.module.scss";
 import waifuImage from "../../images/waifu.png";
-// import {waifuR} from "waifur";
-// import {test} from "../../scripts/waifu";
 
 // components
 import { Category } from "../../components/Category/index";
 import { Modal } from "../../components/Modal/index";
 
-export function Homepage(props) {
-  const [loginStatus, setLoginStatus] = useState(true);
-  // const [modalToggle, setModalToggle] = useState(false);
+export function Homepage() {
   const [modalDisplay, setModalDisplay] = useState("none");
-
-  useEffect(() => {
-    setLoginStatus(props.loginStatus);
-  });
 
   let showModal = () => {
     setModalDisplay("block");
@@ -26,10 +19,12 @@ export function Homepage(props) {
     setModalDisplay("none");
   };
 
+  const {user} = useContext(UserContext);
+
   let categoryOneData = {
     name: "Popular Waifus",
     feed: [
-      { name: "Name one", id: 839383, expiry: 12 },
+      { name: "Name one", id: 839383, expiry: 12, origin: "india", age: 25, height: '5.3 ft', weight: '30 kgs', bust: '45', waiste: '76', hip: '64', desc: 'desc'},
       { name: "Name two", id: 145367, expiry: 870 },
       { name: "Name three", id: 938708, expiry: 1678 },
       { name: "Name four", id: 839378, expiry: 12 },
@@ -40,7 +35,7 @@ export function Homepage(props) {
     ],
   };
   let categoryTwoData = {
-    name: "Rare Collection",
+    name: "My Waifus",
     feed: [
       { name: "Name one", id: 111123, expiry: 12 },
       { name: "Name two", id: 241314, expiry: 870 },
@@ -70,7 +65,7 @@ export function Homepage(props) {
                   consectetur adipisicing elit. Temporibus, nihil.
                 </p>
                 <div className={style["btn-container"]}>
-                  {true ? (
+                  {user ? (
                     <div
                       className={`${style.btn} ${style["btn__outlined"]}`}
                       onClick={showModal}
@@ -78,12 +73,7 @@ export function Homepage(props) {
                       Mint
                     </div>
                   ) : (
-                    <Link
-                      to="/login"
-                      className={`${style.btn} ${style["btn__outlined"]}`}
-                    >
-                      Login
-                    </Link>
+                    <></>
                   )}
 
                   <a

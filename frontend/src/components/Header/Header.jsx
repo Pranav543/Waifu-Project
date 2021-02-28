@@ -1,20 +1,23 @@
-import React, { useEffect } from "react";
-import { NavLink, Link } from "react-router-dom";
-import style from "./header.module.scss";
+import React, { useContext } from "react";
+import { NavLink } from "react-router-dom";
 import getWeb3 from "./../../web3";
+import { UserContext } from "../../utli/UserContext";
+
+// style
+import style from "./header.module.scss";
+
+// components
 import Avatar from "./Avatar/Avatar";
 
-export function Header(props) {
-
-  const connectToMetamask = async () =>{
-    console.log("In")
+export function Header() {
+  const { user, setUser } = useContext(UserContext);
+  const connectToMetamask = async () => {
     const web3 = await getWeb3();
-    console.log(web3)
-      const accounts = await web3.eth.getAccounts();
-      const networkId = await web3.eth.net.getId();
-      console.log(accounts);
-      console.log(networkId);
-  }
+    console.log(web3);
+    const accounts = await web3.eth.getAccounts();
+    const networkId = await web3.eth.net.getId();
+    setUser(accounts);
+  };
   return (
     <header className={style.container}>
       <div className="container">
@@ -28,23 +31,24 @@ export function Header(props) {
 
               <nav className={style.nav}>
                 <ul>
-                  <li>
+                  <li className={style.item}>
                     <NavLink activeClassName={style.active} exact to="/">
                       Home
                     </NavLink>
                   </li>
-                  <li>
+                  <li className={style.item}>
                     <NavLink activeClassName={style.active} exact to="/market">
                       Marketplace
                     </NavLink>
                   </li>
-                  {props.loginStatus ? (
-                    <Avatar address={props.userAddress} />
+                  {user ? (
+                    <Avatar address={user} />
                   ) : (
-                    <li>
-                      <button className="btn btn-warning" type="button" onClick={connectToMetamask}>
-                        Connect Wallet
-                      </button>
+                    <li
+                      className={`${style.btn} ${style["btn__filled--header"]}`}
+                      onClick={connectToMetamask}
+                    >
+                      Connect Wallet
                     </li>
                   )}
                 </ul>
