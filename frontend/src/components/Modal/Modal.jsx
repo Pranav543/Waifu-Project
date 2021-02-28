@@ -13,30 +13,15 @@ export function Modal() {
     // code below
     const web3 = await getWeb3();
     const accounts = await web3.eth.getAccounts();
-<<<<<<< HEAD
-    console.log(accounts)
-      const networkId = await web3.eth.net.getId();
-      console.log(networkId)
-      const address = `0x3618a00e2aDd9A924D1cA2C623F065599573FAD6`;
-      console.log(address)
-      const instance = new web3.eth.Contract(CreateWaifu.abi, address);
-      const tx = await instance.methods.requestNewRandomWaifu(7887, name, origin, description).send({
-        from: accounts[0].toLowerCase()
-      })
-      console.log("Tx Hash: ", tx)
-      const num = await instance.methods.getNumberOfWaifus().call();
-      console.log("Number Of Waifu: ", num)
-      const second_waifu = await instance.methods.waifus(0).call();
-      console.log("Second Waifu: ", second_waifu)
-=======
     console.log(accounts);
     const networkId = await web3.eth.net.getId();
-    console.log(networkId);
     const address = `0xaa608FE67f3BAb163d843c67798Bd45B2949eAF0`;
     console.log(address);
+    const randomNumber = Math.floor(Math.random() * 100000);
+    const imgSource = `https://www.thiswaifudoesnotexist.net/example-${randomNumber}.jpg`;
     const instance = new web3.eth.Contract(CreateWaifu.abi, address);
     const tx = await instance.methods
-      .requestNewRandomWaifu(7887, name, origin, description)
+      .requestNewRandomWaifu(7887, name, origin, description, imgSource)
       .send({
         from: accounts[0].toLowerCase(),
       });
@@ -45,7 +30,6 @@ export function Modal() {
     console.log("Number Of Waifu: ", num);
     const second_waifu = await instance.methods.waifus(1).call();
     console.log("Second Waifu: ", second_waifu);
->>>>>>> 9a14ac72d205cf5804e8325ce4cc907ca1cbaa8d
   };
 
   return (

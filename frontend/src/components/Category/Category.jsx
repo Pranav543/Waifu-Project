@@ -5,6 +5,7 @@ import style from "./category.module.scss";
 // components
 import { FeatureCard } from "../FeatureCard/index";
 
+// Raild display - with horizontal scroll
 export function Category(props) {
   useEffect(() => {
     // const waifuApi = new api('your_secret_api_key_here')
@@ -61,6 +62,27 @@ export function Category(props) {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+// Grid display
+export function GridCategory(props) {
+   // to feed data to the cards
+  let arr = props.data.feed;
+  let cards = [];
+  for (var i = 0; i < arr.length; i++) {
+    cards.push(<div className="col-lg-3 col-md-6 col-sm-12"><FeatureCard data={arr[i]} key={i}/></div>);
+  }
+  return (
+    <>
+      <div className={style.container}>
+        <div className="container">
+          <div className="row">
+            {cards}
           </div>
         </div>
       </div>

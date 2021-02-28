@@ -47,6 +47,7 @@ export function Header() {
                     <li
                       className={`${style.btn} ${style["btn__filled--header"]}`}
                       onClick={connectToMetamask}
+                      style={{marginRight:0}}
                     >
                       Connect Wallet
                     </li>

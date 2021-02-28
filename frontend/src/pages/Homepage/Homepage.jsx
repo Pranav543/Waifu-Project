@@ -1,5 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "../../utli/UserContext";
+
+import getWeb3 from  "./../../web3";
+import CreateWaifu from "./../../abi/CreateWaifu.json";
 
 import style from "./homepage.module.scss";
 import waifuImage from "../../images/waifu.png";
@@ -10,6 +13,19 @@ import { Modal } from "../../components/Modal/index";
 
 export function Homepage() {
   const [modalDisplay, setModalDisplay] = useState("none");
+  const address = '0xA1aD01C972A553f366128536a4aCA8cC00b74A17';
+  useEffect(()=>{
+    async function showData() {
+      const web3 = await getWeb3();
+      const instance = new web3.eth.Contract(CreateWaifu.abi, address);
+      const totalIDs = await instance.methods.getTokenIdOfWaifus().call(); 
+      console.log(totalIDs);
+      // const data = await instance.methods.getWaifuStats();
+      // console.log(data); 
+    }
+    
+    showData();
+  }, [])
 
   let showModal = () => {
     setModalDisplay("block");
