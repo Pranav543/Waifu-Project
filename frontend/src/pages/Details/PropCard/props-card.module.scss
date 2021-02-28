@@ -1,0 +1,26 @@
+.card{
+    border:1px solid #A4A5FF;
+    // box-shadow:4px 4px #A4A5FF;
+    border-radius:5px;
+    padding:8px 10px;
+    margin-bottom:30px;
+    background-color:rgba(76, 98, 196, 0.06);
+
+    p{
+        margin:0;
+        text-align: center;
+    }
+}
+
+.type{
+    color:#A4A5FF;
+    text-transform: uppercase;
+    margin-bottom:5px; 
+    font-size:12px;
+}
+
+.value{
+    color:white;
+    font-size:22px;
+    font-weight:bold; 
+}
