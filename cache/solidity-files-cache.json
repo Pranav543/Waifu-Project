@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "E:\\EthIndia Fellowship\\Waifu Project\\contracts\\CreateWaifu.sol": {
-      "lastModificationDate": 1614430858114,
-      "contentHash": "511ed93976ced6577e70c918cf2e43ae",
+      "lastModificationDate": 1614509575265,
+      "contentHash": "cba5eebb99f6d9f455235b5b1f02a824",
       "sourceName": "contracts/CreateWaifu.sol",
       "solcConfig": {
         "version": "0.6.2",
