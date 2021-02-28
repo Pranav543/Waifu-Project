@@ -1,5 +1,6 @@
-import React from "react";
-import { BrowserRouter as Router, Switch } from "react-router-dom";
+import React, {useState} from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { UserContext } from "../utli/UserContext";
 
 // components and pages
 import { Header } from "../components/Header/index";
@@ -8,35 +9,22 @@ import { Login } from "../pages/Login/index";
 import { Details } from "../pages/Details/index";
 import { Footer } from "../components/Footer/index";
 
-export class Dapp extends React.Component {
-  constructor(props){
-    super(props);
-
-    this.state={
-      loginStatus: false,
-      userAddress: undefined,
-    }
-  }
-
-  loginStatus=(data) => {
-    this.setState({
-      loginStatus: data.loginStatus,
-      userAddress: data.userAddress,
-    })
-  }
-  render() {
-    return (
-      <>
-        <Router>
-          <Header loginStatus={this.state.loginStatus} userAddress={this.state.userAddress}/>
+export function Dapp() {
+  const [user, setUser] = useState(undefined);
+  return (
+    <>
+      <Router>
+        <UserContext.Provider value={{user, setUser}}>
+          <Header />
           <Switch>
-            <Homepage path="/" exact loginStatus={this.state.loginStatus} />
-            <Login path="/login" exact getLoginStatus={this.loginStatus}/>
-            <Details path="/waifu/:id" />
+            <Homepage path="/" exact />
+            <Login path="/login" exact />
+            <Route path="/waifu/:id" component={Details} />
           </Switch>
-          <Footer />
-        </Router>
-      </>
-    );
-  }
+        </UserContext.Provider>
+
+        <Footer />
+      </Router>
+    </>
+  );
 }

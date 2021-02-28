@@ -6,28 +6,29 @@ import style from "./feature-card.module.scss";
 import pika from "../../images/pika.png";
 
 export function FeatureCard(props) {
-  let totalDays = props.data.expiry;
-  let remainingDays = totalDays % 365;
-  let days = remainingDays % 30;
-  let yr, month;
+  // let totalDays = props.data.expiry;
+  // let remainingDays = totalDays % 365;
+  // let days = remainingDays % 30;
+  // let yr, month;
 
-  if (totalDays >= 2 * 365) {
-    yr = Math.trunc(totalDays / 365);
-  } else {
-    yr = 1;
-  }
+  // if (totalDays >= 2 * 365) {
+  //   yr = Math.trunc(totalDays / 365);
+  // } else {
+  //   yr = 1;
+  // }
 
-  if (remainingDays >= 2 * 30) {
-    month = Math.trunc(remainingDays / 30);
-  } else {
-    month = 1;
-  }
+  // if (remainingDays >= 2 * 30) {
+  //   month = Math.trunc(remainingDays / 30);
+  // } else {
+  //   month = 1;
+  // }
 
   //   console.log(`${yr} years ${month} months ${days} days`);
 
   return (
     <>
-      <Link to={`waifu/${props.data.id}`} className={style['link-wrapper']}>
+      {/* <Link to={`waifu/${props.data.id}`} className={style['link-wrapper']} data={props.data}> */}
+      <Link to={{pathname: `waifu/${props.data.id}`, aboutProps:{name: 'salil',}}} className={style['link-wrapper']} >
         <div className={style.container}>
           <div className={style.image}>
             <img src={pika} alt="" />

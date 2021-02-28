@@ -1,0 +1,27 @@
+.container{
+    background-color:#1d1b1b;
+    padding: 50px 0;
+}
+
+.img{
+    border-radius:5px;
+    width:100%;
+}
+
+.features{
+    color:white;
+}
+
+.id{
+    color:gray;
+}
+
+.sub-heading{
+    font-size:20px;
+}
+
+.btn-container{
+    margin-bottom:30px;
+}
+
+@import "../../components/btn.scss";
