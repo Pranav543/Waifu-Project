@@ -26,7 +26,7 @@ export function Header() {
             <div className={style["inner-container"]}>
               <div style={{ color: "white", lineHeight: "60px" }}>
                 {/* <img src="" alt="Dapp logo"/> */}
-                LOGO
+                The Waifu NFT Marketplace
               </div>
 
               <nav className={style.nav}>
@@ -47,6 +47,7 @@ export function Header() {
                     <li
                       className={`${style.btn} ${style["btn__filled--header"]}`}
                       onClick={connectToMetamask}
+                      style={{marginRight:0}}
                     >
                       Connect Wallet
                     </li>

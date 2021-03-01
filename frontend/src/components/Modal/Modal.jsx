@@ -28,19 +28,19 @@ export function Modal() {
         
     //   });
     // console.log("Tx Hash Is : ", tx);
-    // const num = await instance.methods.getWaifusCount(accounts[0]).call();
-    // console.log("Number Of Waifu: ", num);
+    const num = await instance.methods.getWaifusCount('0x148D6d1d5793eB9bDC14941AE8953894a36dbc22').call();
+    console.log("Number Of Waifu: ", num);
     // const au = await instance.methods.putForAuction(0, 1).send({
     //   gas:300000,
     //   from: accounts[0].toLowerCase()
     // });
     // console.log("Auction Tx: ", au);
-    const buytx = await instance.methods.buyWaifu(0).send({
-      gas: 3000000,
-      from: accounts[0].toLowerCase(),
-      value: web3.utils.toWei("1")
-    })
-    console.log("Buy Tx: ", buytx);
+    // const buytx = await instance.methods.buyWaifu(0).send({
+    //   gas: 3000000,
+    //   from: accounts[0].toLowerCase(),
+    //   value: web3.utils.toWei("1")
+    // })
+    // console.log("Buy Tx: ", buytx);
     // const trade = await instance.methods.getAuctionTrade(0).call();
     // console.log("Trade: ",trade)
     // const second_waifu = await instance.methods.waifus("0").call();

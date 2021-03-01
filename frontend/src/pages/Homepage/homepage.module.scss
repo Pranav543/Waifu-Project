@@ -4,14 +4,15 @@
 }
 
 .modal-container {
-  background-color: rgba(0, 0, 0, 0.8);
+  //   background-color:rgba(76, 98, 196, 0.06);
+  background-color: rgba(110, 113, 128, 0.84);
   z-index: 10;
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  padding:100px 0;
+  padding: 100px 0;
 }
 
 .close-modal {

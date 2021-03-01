@@ -5,35 +5,17 @@ import style from "./category.module.scss";
 // components
 import { FeatureCard } from "../FeatureCard/index";
 
+// Raild display - with horizontal scroll
 export function Category(props) {
-  useEffect(() => {
-    // const waifuApi = new api('your_secret_api_key_here')
-
-    // waifuApi.getDailyWaifu().then((waifu) => {
-    //   console.log(waifu.name);
-    // });
-    // let myHeaders = new Headers();
-    // myHeaders.append("Content-Type", "application/json");
-    // let requestOptions = {
-    //   method: "GET",
-    //   headers: myHeaders,
-    //   redirect: "follow",
-    //   credentials: "include",
-    // };
-
-    // fetch(
-    //   "http://mywaifulist.moe/api/v1/user",
-    //   requestOptions
-    // ).then((response)=>{
-    //   console.log(response);
-    // })
-  });
+  // useEffect(() => {
+  //   console.log('category', props.imgSrc)
+  // });
 
   // to feed data to the cards
   let arr = props.data.feed;
   let cards = [];
   for (var i = 0; i < arr.length; i++) {
-    cards.push(<FeatureCard data={arr[i]} key={i}/>);
+    cards.push(<FeatureCard data={arr[i]} img={props.imgSrc[i]} key={i} auction={props.auction}/>);
   }
 
   // to set the rails width dynamically
@@ -61,6 +43,28 @@ export function Category(props) {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+// Grid display
+export function GridCategory(props) {
+   // to feed data to the cards
+  let arr = props.data.feed;
+  let cards = [];
+  for (var i = 0; i < arr.length; i++) {
+    cards.push(<div className="col-lg-3 col-md-6 col-sm-12"><FeatureCard data={arr[i]} img={props.imgSrc[i]} key={i} auction={props.auction}/></div>);
+  }
+  
+  return (
+    <>
+      <div className={style.container}>
+        <div className="container">
+          <div className="row">
+            {cards}
           </div>
         </div>
       </div>
